@@ -1,73 +1,95 @@
-# Welcome to your Lovable project
 
-## Project info
+# FitLife Pro: Plataforma de Fitness Personalizada
 
-**URL**: https://lovable.dev/projects/57462cb3-2b73-4aa0-b5a4-78840cd3c420
+FitLife Pro es una plataforma SaaS de fitness que ofrece entrenamiento personalizado mediante IA, planes de nutrición dinámicos, integración con wearables, gamificación y una comunidad activa para apoyar a los usuarios en su viaje fitness.
 
-## How can I edit this code?
+## Características Principales
 
-There are several ways of editing your application.
+- **Entrenador IA Personalizado**: Rutinas adaptadas a tu progreso en tiempo real
+- **Planes de Nutrición Dinámicos**: Alimentación optimizada según tu actividad y objetivos
+- **Integración con Wearables**: Sincronización con Garmin, Fitbit, Apple Watch y más
+- **Gamificación**: Sistema de puntos, medallas y tablas de clasificación
+- **Comunidad Activa**: Chats en vivo y foros para mantenerte motivado
+- **Analytics Avanzados**: Visualización detallada de tu progreso
 
-**Use Lovable**
+## Tecnologías Utilizadas
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/57462cb3-2b73-4aa0-b5a4-78840cd3c420) and start prompting.
+- React 18
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+- Vite
 
-Changes made via Lovable will be committed automatically to this repo.
+## Modelo de Monetización
 
-**Use your preferred IDE**
+- **Freemium**: Plan básico gratuito con funcionalidades limitadas
+- **Suscripción**: Planes mensuales, trimestrales y anuales con diferentes niveles de acceso
+- **Corporativo**: Soluciones personalizadas para empresas
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Despliegue en Vercel
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clona este repositorio:
+```
+git clone https://github.com/tu-usuario/fitlife-pro.git
+```
 
-Follow these steps:
+2. Instala las dependencias:
+```
+cd fitlife-pro
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Configura las variables de entorno necesarias:
+- Crea un archivo `.env` en la raíz del proyecto
+- Añade las siguientes variables:
+```
+VITE_AI_API_KEY=tu_api_key_de_ia
+VITE_GARMIN_API_KEY=tu_api_key_de_garmin
+VITE_FITBIT_API_KEY=tu_api_key_de_fitbit
+VITE_APPLE_HEALTHKIT_KEY=tu_api_key_de_apple
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Ejecuta localmente para desarrollo:
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+5. Para desplegar en Vercel:
+```
+npm run build
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+6. Conecta el repositorio a tu cuenta de Vercel y configura las mismas variables de entorno en la plataforma.
 
-**Use GitHub Codespaces**
+## Paleta de Colores
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Primario**: #0D3B66 (Azul profundo)
+- **Secundario**: #FAA916 (Amarillo vibrante)
+- **Neutros**: #F5F5F5 (Gris claro) / #333333 (Gris oscuro)
+- **Accent**: #EF476F (Rosa brillante)
 
-## What technologies are used for this project?
+## Estructura del Proyecto
 
-This project is built with:
+```
+/src
+  /components        # Componentes reutilizables
+  /pages             # Páginas principales
+  /styles            # Estilos globales
+  /hooks             # Custom hooks
+  /utils             # Funciones utilitarias
+  /context           # Contextos de React
+  /services          # Servicios (API, etc.)
+  /tests             # Tests unitarios
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Tests Unitarios
 
-## How can I deploy this project?
+Ejecuta los tests con:
+```
+npm run test
+```
 
-Simply open [Lovable](https://lovable.dev/projects/57462cb3-2b73-4aa0-b5a4-78840cd3c420) and click on Share -> Publish.
+## Contacto
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Para más información o soporte, contacta con nosotros en:
+soporte@fitlifepro.com
