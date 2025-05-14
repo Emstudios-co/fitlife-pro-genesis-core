@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { supabase, isSupabaseInitialized } from "@/lib/supabase";
 import { toast } from "@/components/ui/sonner";
@@ -7,6 +8,7 @@ interface User {
   email: string;
   first_name?: string;
   last_name?: string;
+  avatar_url?: string;
 }
 
 interface AuthContextType {
@@ -29,47 +31,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!isSupabaseInitialized()) {
       setLoading(false);
       toast.error("Error de configuración", { 
-        description: "No se pudo conectar con Supabase. Compruebe las variables de entorno." 
+        description: "No se pudo conectar con Supabase. Compruebe la conexión." 
       });
       return;
     }
 
-    // Verificar si hay una sesión activa
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
-        const { data: userData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
-
-        setUser({
-          id: session.user.id,
-          email: session.user.email!,
-          ...(userData || {})
-        });
-      }
-      
-      setLoading(false);
-    };
-
-    // Configurar listener para cambios en la autenticación
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log("Auth state changed:", event, session?.user?.id);
+        
         if (session) {
-          const { data: userData } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
+          try {
+            const { data: userData, error } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', session.user.id)
+              .single();
 
-          setUser({
-            id: session.user.id,
-            email: session.user.email!,
-            ...(userData || {})
-          });
+            if (error) {
+              console.error("Error fetching user profile:", error);
+            }
+
+            setUser({
+              id: session.user.id,
+              email: session.user.email!,
+              ...(userData || {})
+            });
+          } catch (error) {
+            console.error("Error in auth state change handler:", error);
+          }
         } else {
           setUser(null);
         }
@@ -77,10 +68,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     );
 
+    // THEN check for existing session
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          const { data: userData, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          if (error) {
+            console.error("Error fetching profile:", error);
+          }
+
+          setUser({
+            id: session.user.id,
+            email: session.user.email!,
+            ...(userData || {})
+          });
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     checkSession();
 
     return () => {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, []);
 
@@ -88,74 +108,98 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized") };
     }
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
-      toast.error("Error al iniciar sesión", { description: error.message });
+      if (error) {
+        console.error("Error signing in:", error.message);
+        toast.error("Error al iniciar sesión", { description: error.message });
+      }
+
+      return { error };
+    } catch (error: any) {
+      console.error("Exception during sign in:", error);
+      toast.error("Error inesperado", { description: error.message || "Ha ocurrido un error al iniciar sesión" });
+      return { error };
     }
-
-    return { error };
   };
 
   const signUp = async (email: string, password: string) => {
     if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized"), user: null };
     }
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
 
-    if (error) {
-      toast.error("Error al registrarse", { description: error.message });
+      if (error) {
+        console.error("Error signing up:", error.message);
+        toast.error("Error al registrarse", { description: error.message });
+        return { error, user: null };
+      }
+
+      toast.success("Registro exitoso", { 
+        description: "Hemos enviado un correo de verificación. Por favor verifica tu correo electrónico." 
+      });
+
+      return { error, user: data.user };
+    } catch (error: any) {
+      console.error("Exception during sign up:", error);
+      toast.error("Error inesperado", { description: error.message || "Ha ocurrido un error al registrarse" });
       return { error, user: null };
     }
-
-    if (data.user && !error) {
-      // Crear perfil para el nuevo usuario
-      await supabase.from('profiles').insert({
-        id: data.user.id,
-        email: data.user.email,
-        created_at: new Date().toISOString(),
-      });
-      toast.success("Registro exitoso", { description: "Por favor verifica tu correo electrónico." });
-    }
-
-    return { error, user: data.user };
   };
 
   const signOut = async () => {
     if (!isSupabaseInitialized()) {
       return;
     }
-    await supabase.auth.signOut();
-    setUser(null);
+    
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+    } catch (error: any) {
+      console.error("Error signing out:", error);
+      toast.error("Error al cerrar sesión", { description: error.message || "Ha ocurrido un error al cerrar sesión" });
+    }
   };
 
   const updateProfile = async (data: Partial<User>) => {
     if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized") };
     }
+    
     if (!user) {
       return { error: new Error("No authenticated user") };
     }
 
-    const { error } = await supabase
-      .from('profiles')
-      .update(data)
-      .eq('id', user.id);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update(data)
+        .eq('id', user.id);
 
-    if (!error) {
-      setUser({ ...user, ...data });
-      toast.success("Perfil actualizado", { description: "Tus datos se han actualizado correctamente." });
-    } else {
-      toast.error("Error al actualizar perfil", { description: error.message });
+      if (!error) {
+        setUser({ ...user, ...data });
+        toast.success("Perfil actualizado", { description: "Tus datos se han actualizado correctamente." });
+      } else {
+        console.error("Error updating profile:", error.message);
+        toast.error("Error al actualizar perfil", { description: error.message });
+      }
+
+      return { error };
+    } catch (error: any) {
+      console.error("Exception during profile update:", error);
+      toast.error("Error inesperado", { description: error.message || "Ha ocurrido un error al actualizar el perfil" });
+      return { error };
     }
-
-    return { error };
   };
 
   const value = {
