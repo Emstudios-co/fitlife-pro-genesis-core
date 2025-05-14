@@ -1,11 +1,23 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { toast } from "@/components/ui/sonner";
 
-// Inicializar el cliente de Supabase
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Inicializar el cliente de Supabase con comprobación de variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Verificar si las variables de entorno están definidas
+let supabase: any;
+try {
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error("Supabase environment variables are missing");
+  }
+  supabase = createClient(supabaseUrl, supabaseKey);
+} catch (error) {
+  console.error("Failed to initialize Supabase client:", error);
+  // El cliente de Supabase se inicializará como null si hay un error
+}
 
 interface User {
   id: string;
@@ -30,6 +42,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Verificar si Supabase está inicializado
+    if (!supabase) {
+      setLoading(false);
+      toast.error("Error de configuración", { 
+        description: "No se pudo conectar con Supabase. Compruebe las variables de entorno." 
+      });
+      return;
+    }
+
     // Verificar si hay una sesión activa
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -81,19 +102,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) {
+      return { error: new Error("Supabase not initialized") };
+    }
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    if (error) {
+      toast.error("Error al iniciar sesión", { description: error.message });
+    }
+
     return { error };
   };
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) {
+      return { error: new Error("Supabase not initialized"), user: null };
+    }
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
+
+    if (error) {
+      toast.error("Error al registrarse", { description: error.message });
+      return { error, user: null };
+    }
 
     if (data.user && !error) {
       // Crear perfil para el nuevo usuario
@@ -102,17 +138,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: data.user.email,
         created_at: new Date().toISOString(),
       });
+      toast.success("Registro exitoso", { description: "Por favor verifica tu correo electrónico." });
     }
 
     return { error, user: data.user };
   };
 
   const signOut = async () => {
+    if (!supabase) {
+      return;
+    }
     await supabase.auth.signOut();
     setUser(null);
   };
 
   const updateProfile = async (data: Partial<User>) => {
+    if (!supabase) {
+      return { error: new Error("Supabase not initialized") };
+    }
     if (!user) {
       return { error: new Error("No authenticated user") };
     }
@@ -124,6 +167,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!error) {
       setUser({ ...user, ...data });
+      toast.success("Perfil actualizado", { description: "Tus datos se han actualizado correctamente." });
+    } else {
+      toast.error("Error al actualizar perfil", { description: error.message });
     }
 
     return { error };
@@ -148,3 +194,4 @@ export const useAuth = () => {
   }
   return context;
 };
+
