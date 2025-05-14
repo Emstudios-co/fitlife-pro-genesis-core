@@ -1,23 +1,6 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase, isSupabaseInitialized } from "@/lib/supabase";
 import { toast } from "@/components/ui/sonner";
-
-// Inicializar el cliente de Supabase con comprobación de variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-// Verificar si las variables de entorno están definidas
-let supabase: any;
-try {
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error("Supabase environment variables are missing");
-  }
-  supabase = createClient(supabaseUrl, supabaseKey);
-} catch (error) {
-  console.error("Failed to initialize Supabase client:", error);
-  // El cliente de Supabase se inicializará como null si hay un error
-}
 
 interface User {
   id: string;
@@ -43,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Verificar si Supabase está inicializado
-    if (!supabase) {
+    if (!isSupabaseInitialized()) {
       setLoading(false);
       toast.error("Error de configuración", { 
         description: "No se pudo conectar con Supabase. Compruebe las variables de entorno." 
@@ -102,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    if (!supabase) {
+    if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized") };
     }
     const { error } = await supabase.auth.signInWithPassword({
@@ -118,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signUp = async (email: string, password: string) => {
-    if (!supabase) {
+    if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized"), user: null };
     }
     const { data, error } = await supabase.auth.signUp({
@@ -145,7 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    if (!supabase) {
+    if (!isSupabaseInitialized()) {
       return;
     }
     await supabase.auth.signOut();
@@ -153,7 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const updateProfile = async (data: Partial<User>) => {
-    if (!supabase) {
+    if (!isSupabaseInitialized()) {
       return { error: new Error("Supabase not initialized") };
     }
     if (!user) {
@@ -194,4 +177,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
