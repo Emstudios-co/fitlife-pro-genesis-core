@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardNav from "../components/DashboardNav";
-import { Activity, Calendar, Dumbbell, Heart, Users, Award, Nutrition } from "lucide-react";
+import { Activity, Calendar, Dumbbell, Heart, Users, Award } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -143,7 +142,7 @@ const Dashboard = () => {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Apple className="text-secondary" />
+                <Heart className="text-secondary" />
                 Nutrición
               </CardTitle>
             </CardHeader>
@@ -186,7 +185,7 @@ const Dashboard = () => {
                 
                 <div className="border-t md:border-t-0 md:border-l border-neutral-light md:pl-4 pt-4 md:pt-0 flex-1">
                   <div className="flex items-center gap-3 mb-4">
-                    <Apple className="text-secondary h-5 w-5" />
+                    <Heart className="text-secondary h-5 w-5" />
                     <div>
                       <h3 className="font-medium">Plan de comidas diario</h3>
                       <p className="text-sm text-neutral-dark/70">Ajustado a tus objetivos</p>

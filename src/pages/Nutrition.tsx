@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -247,7 +246,6 @@ const Nutrition = () => {
                       <Progress
                         value={(nutrition.waterConsumed / nutrition.waterGoal) * 100}
                         className="h-2 bg-blue-100"
-                        indicatorClassName="bg-blue-500"
                       />
                     </div>
                     <Button onClick={addWater} className="w-full">
