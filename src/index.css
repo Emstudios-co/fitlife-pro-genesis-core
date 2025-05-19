@@ -7,14 +7,14 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 270 70% 60%;
     --primary-foreground: 210 40% 98%;
@@ -25,47 +25,17 @@
     --accent: 331 85% 61%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 270 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
     --ring: 221.2 83.2% 53.3%;
 
     --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 270 70% 60%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 38 96% 54%;
-    --secondary-foreground: 0 0% 0%;
-
-    --accent: 331 85% 61%;
-    --accent-foreground: 0 0% 100%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -104,27 +74,27 @@
   }
   
   .kaleidoscopic-bg {
-    @apply bg-gradient-to-br from-violet-500 via-purple-400 to-fuchsia-500;
+    @apply bg-gradient-to-br from-violet-500/30 via-purple-700/30 to-fuchsia-500/30;
     background-size: 300% 300%;
     animation: kaleidoscopic-animate 20s ease infinite;
   }
   
   .kaleidoscopic-bg-2 {
-    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+    @apply bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20;
     background-size: 200% 200%;
     animation: kaleidoscopic-animate 15s ease infinite;
   }
 
   .glass-card {
-    @apply backdrop-blur-md bg-white/30 border border-white/20 shadow-xl;
+    @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-lg;
   }
   
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600;
+    @apply bg-clip-text text-transparent;
   }
   
   .card-gradient {
-    @apply bg-gradient-to-br from-indigo-600/90 to-purple-700/90;
+    @apply bg-gradient-to-br from-indigo-600/10 to-purple-700/10 backdrop-blur-sm;
   }
 
   .auth-container {
@@ -205,4 +175,3 @@
 .testimonial-card:hover {
   transform: translateY(-5px) scale(1.01);
 }
-

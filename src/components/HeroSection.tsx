@@ -3,99 +3,78 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../contexts/AuthContext";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
   const { user } = useAuth();
   
   return (
-    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 kaleidoscopic-bg overflow-hidden">
+    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
+      {/* Kaleidoscopic gradient background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute left-0 top-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/30 via-purple-800/30 to-fuchsia-500/30 animate-[kaleidoscopic-animate_20s_ease_infinite]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(120,40,180,0.3)_0%,transparent_70%)]"></div>
+        <div className="absolute -inset-full top-0 z-10 h-full w-[300%] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-25"></div>
       </div>
 
       <div className="container-custom relative z-10 text-white">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-7 flex flex-col justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Tu Entrenador Personal de Fitness <span className="text-secondary">en Línea</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 md:pr-12 text-white/90">
-              Rutinas personalizadas, planes nutricionales y seguimiento de progreso con inteligencia artificial para tu transformación completa.
-            </p>
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-white backdrop-blur-xl">
+            <Sparkles className="h-4 w-4 text-secondary" />
+            <span>Tu entrenador de fitness con IA</span>
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-secondary">
+            Transforma tu cuerpo. <br />Mejora tu vida.
+          </h1>
+          
+          <p className="text-xl mb-8 text-white/80 max-w-2xl">
+            Rutinas personalizadas, planes nutricionales y seguimiento de progreso con inteligencia artificial para tu transformación completa.
+          </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              {user ? (
-                <Link to="/dashboard">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {user ? (
+              <Link to="/dashboard">
+                <Button size="lg" variant="secondary" className="text-black font-bold px-8 hover:scale-105 transition-transform">
+                  Mi Dashboard <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/register">
                   <Button size="lg" variant="secondary" className="text-black font-bold px-8 hover:scale-105 transition-transform">
-                    Ir a mi Dashboard
+                    Empieza Gratis <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-              ) : (
-                <>
-                  <Link to="/register">
-                    <Button size="lg" variant="secondary" className="text-black font-bold px-8 hover:scale-105 transition-transform">
-                      Empieza Gratis
-                    </Button>
-                  </Link>
-                  <Link to="/login">
-                    <Button size="lg" variant="outline" className="border-white text-white hover:text-white hover:bg-white/20 hover:scale-105 transition-transform">
-                      Iniciar sesión
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </div>
+                <Link to="/login">
+                  <Button size="lg" variant="outline" className="border-white/30 text-white bg-black/40 backdrop-blur-sm hover:bg-white/10 hover:text-white hover:scale-105 transition-transform">
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
 
-            <div className="mt-8 flex items-center">
-              <div className="flex -space-x-2">
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-                  src="https://randomuser.me/api/portraits/women/42.jpg"
-                  alt="User"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-                  src="https://randomuser.me/api/portraits/men/35.jpg"
-                  alt="User"
-                />
-                <img
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-                  src="https://randomuser.me/api/portraits/women/26.jpg"
-                  alt="User"
-                />
-                <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-xs font-medium text-black ring-2 ring-white">
+          <div className="mt-12 glass-card p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10">
+            <div className="flex flex-wrap justify-center gap-4 items-center">
+              <div className="flex -space-x-3">
+                <img className="inline-block h-10 w-10 rounded-full ring-2 ring-black"
+                  src="https://randomuser.me/api/portraits/women/42.jpg" alt="User" />
+                <img className="inline-block h-10 w-10 rounded-full ring-2 ring-black"
+                  src="https://randomuser.me/api/portraits/men/35.jpg" alt="User" />
+                <img className="inline-block h-10 w-10 rounded-full ring-2 ring-black"
+                  src="https://randomuser.me/api/portraits/women/26.jpg" alt="User" />
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-black ring-2 ring-black">
                   +5k
                 </div>
               </div>
-              <p className="ml-4 text-sm text-white/80">
+              <p className="text-sm text-white/80">
                 Más de 5,000 personas transformaron su vida este mes
               </p>
             </div>
           </div>
-
-          <div className="md:col-span-5 hidden md:flex items-center">
-            <div className="w-full h-full relative">
-              <div className="absolute -top-4 -left-4 w-full h-full border-2 border-secondary rounded-2xl"></div>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=600&h=750&auto=format"
-                alt="Fitness training"
-                className="w-full h-full object-cover rounded-2xl shadow-xl"
-              />
-              <div className="absolute -bottom-6 -right-6 glass-card p-4 rounded-lg max-w-[200px]">
-                <div className="flex items-center mb-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                  <span className="text-xs font-bold text-white">En vivo</span>
-                </div>
-                <p className="text-sm text-white">
-                  <strong>357 personas</strong> entrenando ahora
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white to-transparent h-12"></div>
     </section>
   );
 };
