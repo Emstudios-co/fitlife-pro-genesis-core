@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const registerSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -63,11 +63,11 @@ const Register = () => {
   };
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-light">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+    <div className="auth-container">
+      <div className="auth-card">
         <div className="text-center mb-6">
-          <Link to="/" className="font-bold text-3xl text-primary inline-flex items-center">
-            <span className="text-accent">Fit</span>Life Pro
+          <Link to="/" className="font-bold text-3xl inline-flex items-center">
+            <span className="text-gradient">FitLife Pro</span>
           </Link>
           <p className="mt-2 text-neutral-dark/70">
             Regístrate para comenzar tu transformación
@@ -83,7 +83,7 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="tu@email.com" {...field} />
+                    <Input placeholder="tu@email.com" {...field} className="backdrop-blur-sm bg-white/50 border-purple-200" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,7 +97,7 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Contraseña</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} className="backdrop-blur-sm bg-white/50 border-purple-200" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,14 +111,14 @@ const Register = () => {
                 <FormItem>
                   <FormLabel>Confirmar contraseña</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} className="backdrop-blur-sm bg-white/50 border-purple-200" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 transition-all duration-300" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? "Registrando..." : "Registrarse"}
             </Button>
           </form>
@@ -127,7 +127,7 @@ const Register = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-dark/70">
             ¿Ya tienes una cuenta?{" "}
-            <Link to="/login" className="text-accent hover:underline">
+            <Link to="/login" className="text-purple-600 hover:underline font-medium">
               Inicia sesión
             </Link>
           </p>

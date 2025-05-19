@@ -8,9 +8,9 @@ const HeroSection = () => {
   const { user } = useAuth();
   
   return (
-    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 bg-gradient-to-br from-primary to-primary-dark overflow-hidden">
+    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 kaleidoscopic-bg overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute left-0 top-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1920')]  bg-cover bg-center opacity-10"></div>
+        <div className="absolute left-0 top-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1920')] bg-cover bg-center opacity-10"></div>
       </div>
 
       <div className="container-custom relative z-10 text-white">
@@ -19,26 +19,26 @@ const HeroSection = () => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
               Tu Entrenador Personal de Fitness <span className="text-secondary">en Línea</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 md:pr-12 text-white/80">
+            <p className="text-xl md:text-2xl mb-8 md:pr-12 text-white/90">
               Rutinas personalizadas, planes nutricionales y seguimiento de progreso con inteligencia artificial para tu transformación completa.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
               {user ? (
                 <Link to="/dashboard">
-                  <Button size="lg" variant="secondary" className="text-black font-bold px-8">
+                  <Button size="lg" variant="secondary" className="text-black font-bold px-8 hover:scale-105 transition-transform">
                     Ir a mi Dashboard
                   </Button>
                 </Link>
               ) : (
                 <>
                   <Link to="/register">
-                    <Button size="lg" variant="secondary" className="text-black font-bold px-8">
+                    <Button size="lg" variant="secondary" className="text-black font-bold px-8 hover:scale-105 transition-transform">
                       Empieza Gratis
                     </Button>
                   </Link>
                   <Link to="/login">
-                    <Button size="lg" variant="outline" className="border-white text-white hover:text-white hover:bg-white/20">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:text-white hover:bg-white/20 hover:scale-105 transition-transform">
                       Iniciar sesión
                     </Button>
                   </Link>
@@ -81,12 +81,12 @@ const HeroSection = () => {
                 alt="Fitness training"
                 className="w-full h-full object-cover rounded-2xl shadow-xl"
               />
-              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg max-w-[200px]">
+              <div className="absolute -bottom-6 -right-6 glass-card p-4 rounded-lg max-w-[200px]">
                 <div className="flex items-center mb-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                  <span className="text-xs font-bold text-black">En vivo</span>
+                  <span className="text-xs font-bold text-white">En vivo</span>
                 </div>
-                <p className="text-sm text-black">
+                <p className="text-sm text-white">
                   <strong>357 personas</strong> entrenando ahora
                 </p>
               </div>

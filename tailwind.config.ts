@@ -30,15 +30,15 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: '#0D3B66',
+          DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
-          DEFAULT: '#FAA916',
+          DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))'
         },
         accent: {
-          DEFAULT: '#EF476F',
+          DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))'
         },
         muted: {
@@ -68,8 +68,8 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
+        sfpro: ['SF Pro Display', 'Inter', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

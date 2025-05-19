@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -55,11 +55,11 @@ const Login = () => {
   };
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-light">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+    <div className="auth-container">
+      <div className="auth-card">
         <div className="text-center mb-6">
-          <Link to="/" className="font-bold text-3xl text-primary inline-flex items-center">
-            <span className="text-accent">Fit</span>Life Pro
+          <Link to="/" className="font-bold text-3xl inline-flex items-center">
+            <span className="text-gradient">FitLife Pro</span>
           </Link>
           <p className="mt-2 text-neutral-dark/70">
             Inicia sesión para continuar con tu entrenamiento
@@ -75,7 +75,7 @@ const Login = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="tu@email.com" {...field} />
+                    <Input placeholder="tu@email.com" {...field} className="backdrop-blur-sm bg-white/50 border-purple-200" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,23 +89,30 @@ const Login = () => {
                 <FormItem>
                   <FormLabel>Contraseña</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
+                    <Input type="password" placeholder="********" {...field} className="backdrop-blur-sm bg-white/50 border-purple-200" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 transition-all duration-300" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
+            
+            {/* Usuario de prueba */}
+            <div className="text-center mt-4 text-sm">
+              <p>Usuario de prueba:</p>
+              <p className="font-mono bg-black/5 p-1 rounded">Email: test@example.com</p>
+              <p className="font-mono bg-black/5 p-1 rounded">Contraseña: 123456</p>
+            </div>
           </form>
         </Form>
         
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-dark/70">
             ¿No tienes una cuenta?{" "}
-            <Link to="/register" className="text-accent hover:underline">
+            <Link to="/register" className="text-purple-600 hover:underline font-medium">
               Regístrate
             </Link>
           </p>

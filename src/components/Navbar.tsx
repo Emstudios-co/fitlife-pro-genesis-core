@@ -30,14 +30,14 @@ const Navbar = () => {
     <nav
       className={`w-full fixed top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white shadow-md py-3"
+          ? "bg-white/80 backdrop-blur-md shadow-md py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="container-custom mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="font-bold text-2xl text-primary">
-            <span className="text-accent">Fit</span>Life Pro
+          <Link to="/" className="font-bold text-2xl">
+            <span className="text-gradient">FitLife Pro</span>
           </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
@@ -76,15 +76,15 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-4">
             {user ? (
               <Link to="/dashboard">
-                <Button variant="default">Mi dashboard</Button>
+                <Button variant="default" className="bg-primary hover:bg-primary/80">Mi dashboard</Button>
               </Link>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline">Iniciar sesión</Button>
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">Iniciar sesión</Button>
                 </Link>
                 <Link to="/register">
-                  <Button variant="default">Registrarse</Button>
+                  <Button variant="default" className="bg-primary hover:bg-primary/80">Registrarse</Button>
                 </Link>
               </>
             )}
@@ -102,7 +102,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       <div
-        className={`lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden absolute top-full left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -146,19 +146,19 @@ const Navbar = () => {
           <div className="pt-4 space-y-2 border-t border-neutral-light">
             {user ? (
               <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="default" className="w-full">
+                <Button variant="default" className="w-full bg-primary hover:bg-primary/80">
                   Mi dashboard
                 </Button>
               </Link>
             ) : (
               <>
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
                     Iniciar sesión
                   </Button>
                 </Link>
                 <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="default" className="w-full">
+                  <Button variant="default" className="w-full bg-primary hover:bg-primary/80">
                     Registrarse
                   </Button>
                 </Link>

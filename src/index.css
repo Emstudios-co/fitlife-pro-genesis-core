@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,16 +16,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 70% 23%;
+    --primary: 270 70% 60%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 38 96% 54%;
     --secondary-foreground: 0 0% 0%;
 
-    --accent: 351 85% 61%;
+    --accent: 331 85% 61%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 270 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,7 +35,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -48,13 +48,13 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 270 70% 60%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 38 96% 54%;
     --secondary-foreground: 0 0% 0%;
 
-    --accent: 351 85% 61%;
+    --accent: 331 85% 61%;
     --accent-foreground: 0 0% 100%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -74,11 +74,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-sfpro;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-montserrat font-bold;
+    @apply font-sfpro font-bold;
   }
 }
 
@@ -102,6 +102,45 @@
   .btn-accent {
     @apply bg-accent text-white hover:bg-accent/90 transition-all;
   }
+  
+  .kaleidoscopic-bg {
+    @apply bg-gradient-to-br from-violet-500 via-purple-400 to-fuchsia-500;
+    background-size: 300% 300%;
+    animation: kaleidoscopic-animate 20s ease infinite;
+  }
+  
+  .kaleidoscopic-bg-2 {
+    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500;
+    background-size: 200% 200%;
+    animation: kaleidoscopic-animate 15s ease infinite;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md bg-white/30 border border-white/20 shadow-xl;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-br from-indigo-600/90 to-purple-700/90;
+  }
+
+  .auth-container {
+    @apply min-h-screen flex items-center justify-center p-4;
+    background: linear-gradient(135deg, #9b87f5 0%, #6e59a5 50%, #d946ef 100%);
+    background-size: 200% 200%;
+    animation: kaleidoscopic-animate 20s ease infinite;
+  }
+  
+  .auth-card {
+    @apply w-full max-w-md p-8 rounded-xl;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  }
 }
 
 @keyframes fadeIn {
@@ -122,6 +161,12 @@
 @keyframes count-up {
   from { content: "0"; }
   to { content: attr(data-target); }
+}
+
+@keyframes kaleidoscopic-animate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .animate-fade-in {
@@ -160,3 +205,4 @@
 .testimonial-card:hover {
   transform: translateY(-5px) scale(1.01);
 }
+
